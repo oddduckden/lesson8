@@ -5,46 +5,49 @@
 уникальные для каждого типа оргтехники.
 """
 
+
 class Warehouse:
     def __init__(self):
         pass
 
+
 class OfficeEquipment:
-    def __init__(self, cost=0, weight=0):
+    def __init__(self, model, cost):
+        self.model = model
         self.cost = cost
-        self.weight = weight
+        self.department = ''
 
 
 class Printer(OfficeEquipment):
-    def __init__(self, cost, weight, model):
-        super().__init__(cost, weight)
-        self.__model = model
+    def __init__(self, model, cost, options):
+        super().__init__(model, cost)
+        self.__options = options
 
     def label(self):
-        print(f'{self.cost}, {self.weight}, {self.__model}')
+        print(f'{self.model}, {self.cost}, {self.__options}')
 
 
 class Scanner(OfficeEquipment):
-    def __init__(self, cost, weight, portability):
-        super().__init__(cost, weight)
+    def __init__(self, model, cost, portability):
+        super().__init__(model, cost)
         self.__portability = portability
 
-    def tag(self):
-        print(f'{self.cost}, {self.weight}, {self.__portability}')
+    def label(self):
+        print(f'{self.model}, {self.cost}, {self.__portability}')
 
 
 class Xerox(OfficeEquipment):
-    def __init__(self, cost, weight, items):
-        super().__init__(cost, weight)
-        self.__items = items
+    def __init__(self, model, cost, feature):
+        super().__init__(model, cost)
+        self.__feature = feature
 
     def label(self):
-        print(f'{self.cost}, {self.weight}, {self.__items}')
+        print(f'{self.model}, {self.cost}, {self.__feature}')
 
 
-a = Printer(300, 35, 'laser')
+a = Printer('HP LaserJet', 300, 'laser')
 a.label()
-b = Scanner(100, 5, False)
-b.tag()
-c = Xerox(500, 100, ('stapler', 'double-side'))
+b = Scanner('Canon lide 400', 100, False)
+b.label()
+c = Xerox('Kyocera 3551', 500, 'double-side')
 c.label()
