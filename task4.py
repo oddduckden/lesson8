@@ -23,8 +23,11 @@ class Printer(OfficeEquipment):
         super().__init__(model, cost)
         self.__options = options
 
-    def label(self):
-        print(f'{self.model}, {self.cost}, {self.__options}')
+    def __str__(self):
+        return f'{self.model}, {self.cost}, {self.__options}'
+
+    def get_param(self):
+        return self.__options
 
 
 class Scanner(OfficeEquipment):
@@ -32,8 +35,11 @@ class Scanner(OfficeEquipment):
         super().__init__(model, cost)
         self.__portability = portability
 
-    def label(self):
-        print(f'{self.model}, {self.cost}, {self.__portability}')
+    def __str__(self):
+        return f'{self.model}, {self.cost}, {self.__portability}'
+
+    def get_param(self):
+        return self.__portability
 
 
 class Xerox(OfficeEquipment):
@@ -41,13 +47,16 @@ class Xerox(OfficeEquipment):
         super().__init__(model, cost)
         self.__feature = feature
 
-    def label(self):
-        print(f'{self.model}, {self.cost}, {self.__feature}')
+    def __str__(self):
+        return f'{self.model}, {self.cost}, {self.__feature}'
+
+    def get_param(self):
+        return self.__feature
 
 
 a = Printer('HP LaserJet', 300, 'laser')
-a.label()
+print(a)
 b = Scanner('Canon lide 400', 100, False)
-b.label()
+print(b)
 c = Xerox('Kyocera 3551', 500, 'double-side')
-c.label()
+print(c.get_param())

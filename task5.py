@@ -41,17 +41,35 @@ class Printer(OfficeEquipment):
         super().__init__(model, cost)
         self.__options = options
 
+    def __str__(self):
+        return f'{self.model}, {self.cost}, {self.__options}'
+
+    def get_param(self):
+        return self.__options
+
 
 class Scanner(OfficeEquipment):
     def __init__(self, model, cost, portability):
         super().__init__(model, cost)
         self.__portability = portability
 
+    def __str__(self):
+        return f'{self.model}, {self.cost}, {self.__portability}'
+
+    def get_param(self):
+        return self.__portability
+
 
 class Xerox(OfficeEquipment):
     def __init__(self, model, cost, feature):
         super().__init__(model, cost)
         self.__feature = feature
+
+    def __str__(self):
+        return f'{self.model}, {self.cost}, {self.__feature}'
+
+    def get_param(self):
+        return self.__feature
 
 
 w = Warehouse()
