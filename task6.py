@@ -13,6 +13,7 @@ class Warehouse:
         self.__vocub = {'Printer': Printer, 'Scanner': Scanner, 'Xerox': Xerox}
         self.__distribute = {Printer: [], Scanner: [], Xerox: []}
         self.__overload = []
+        self.__orders = []
 
     def add(self, item):
         if sum([len(self.__items[x]) for x in self.__items.keys()]) <= self.__maxnumber:
@@ -20,9 +21,11 @@ class Warehouse:
                 if isinstance(item, __clss):
                     self.__items[__clss].append(item)
                     print(f'Поступил на склад: {item}')
+                    self.check_orders()
         else:
             print('на складе нет места')
             self.__overload.append(item)
+            print(f'Ожидает принятия на склад: {[x.model for x in self.__overload]}')
 
     def distribute(self, item, department, value):
         __clss = self.__vocub[item]
@@ -32,13 +35,20 @@ class Warehouse:
                 self.__distribute[__clss].append(el)
                 el.department = department
                 print(f'Выдан: {el} в {el.department}')
-                w.check_overload()
+                self.check_overload()
                 return
-        print('Данная позиция на складе отсутствует')
+        __order = (item, department, value)
+        print(f'Данная позиция на складе отсутствует: {__order}')
+        self.__orders.append(__order)
+        print(f'Список ожидания: {self.__orders}')
 
     def check_overload(self):
         if self.__overload:
-            w.add(self.__overload.pop(0))
+            self.add(self.__overload.pop(0))
+
+    def check_orders(self):
+        if self.__orders:
+            self.distribute(*self.__orders.pop(0))
 
 
 class OfficeEquipment:
@@ -101,9 +111,18 @@ print('Заказан: Принтер в отдел разработки, цве
 w.distribute('Printer', 'R&D', 'Color')
 print('Заказан: Сканер для директора. ', end='')
 w.distribute('Scanner', 'CEO', False)
-# c = Printer('Canon ip6500', 400, 'Color')
-# w.add(c)
+print('Заказан: Принтер в отдел продаж, цветной. ', end='')
+w.distribute('Printer', 'Sales', 'Color')
+it = Printer('HP Inkjet', 100, 'Color')
+w.add(it)
 print('Заказан: Сканер в бухгалтерию. ', end='')
 w.distribute('Scanner', 'accounts', False)
-print('Заказан: Принтер в отдел разработи, цветной. ', end='')
-w.distribute('Printer', 'R&D', 'Color')
+print('Заказан: Принтер в отдел продаж, цветной. ', end='')
+w.distribute('Printer', 'Sales', 'Color')
+it = Printer('HP LaserJet', 100, 'B&W')
+w.add(it)
+it = Printer('HP Inkjet', 100, 'Color')
+w.add(it)
+for i in range(4):
+    it = Printer('HP LaserJet', 300, 'B&W')
+    w.add(it)
