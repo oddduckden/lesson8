@@ -30,7 +30,6 @@ class Warehouse:
                 el.department = department
                 print(f'Выдан: {el} в {el.department}')
                 return
-        __order = (item, department, value)
         print(f'Данная позиция на складе отсутствует: {(item, department, value)}')
 
 
